@@ -8,7 +8,7 @@ const logger = require('koa-logger')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
-
+const hbs = require('koa-hbs')
 // error handler
 onerror(app)
 
@@ -20,10 +20,15 @@ app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
-app.use(views(__dirname + '/views', {
+/*app.use(views(__dirname + '/views', {
   extension: 'hbs',
   map: { hbs: 'handlebars' }
-}))
+}))*/
+
+app.use(hbs.middleware({
+    viewPath: __dirname + '/views',
+    layoutsPath: __dirname + '/views',
+}));
 
 // logger
 app.use(async (ctx, next) => {
